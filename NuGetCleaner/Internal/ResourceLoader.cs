@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace NugetCleaner.Internal
+namespace NuGetCleaner.Internal
 {
     internal static class ResourceLoader
     {

@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using NugetCleaner.Internal;
+using NuGetCleaner.Internal;
 
-namespace NugetCleaner
+namespace NuGetCleaner
 {
     class Program
     {

@@ -11,7 +11,7 @@ This library is available on github: https://github.com/thomasgalliker/NuGetClea
 
 ### Usage
 ```C#
-NugetCleaner.exe <PackageId> <ApiKey>
+NuGetCleaner.exe <PackageId> <ApiKey>
 ```
 
 ### License
