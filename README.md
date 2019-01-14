@@ -1,5 +1,5 @@
 # NuGetCleaner
-[![Version](https://img.shields.io/nuget/v/NuGetCleaner.svg)](https://www.nuget.org/packages/NuGetCleaner)  [![Downloads](https://img.shields.io/nuget/dt/NuGetCleaner.svg)](https://www.nuget.org/packages/NuGetCleaner)
+[![Version](https://img.shields.io/github/release/thomasgalliker/NuGetCleaner.svg)](https://github.com/thomasgalliker/NuGetCleaner/releases)
 
 <img src="https://raw.githubusercontent.com/thomasgalliker/NuGetCleaner/develop/icon.png" width="100" height="100" alt="NuGetCleaner" align="right"></img>
 
