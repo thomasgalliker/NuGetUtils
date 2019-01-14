@@ -10,8 +10,28 @@ This library is available on github: https://github.com/thomasgalliker/NuGetClea
 
 
 ### Usage
+Open a new Command Prompt and start NuGetCleaner.exe with the parameters <PackageId> where you put the ID of your NuGet package and the <ApiKey> which is used for authorization purposes. Make sure the API Key has appropriate rights to "Unlist packages" for the selected NuGet package.
 ```C#
 NuGetCleaner.exe <PackageId> <ApiKey>
+```
+
+**Example:**
+The following command attempts to unlist all pre-release Versions of "EnumUtils" NuGet package:
+```C#
+NuGetCleaner.exe EnumUtils apikeyapikeyapikeyapikeyapikeyapikeyapikey
+```
+Console Output:
+```C#
+nuget.exe delete EnumUtils 1.0.0-pre1 -Source https://www.nuget.org/api/v2/package -apikey apikeyapikeyapikeyapikeyapikeyapikeyapikey -NonInteractive
+WARNING: Deleting EnumUtils 1.0.0-pre1 from the 'https://www.nuget.org/api/v2/package'.
+  DELETE https://www.nuget.org/api/v2/package/EnumUtils/1.0.0-pre1
+  OK https://www.nuget.org/api/v2/package/EnumUtils/1.0.0-pre1 1271ms
+EnumUtils 1.0.0-pre1 was deleted successfully.
+nuget.exe delete EnumUtils 1.0.0-pre2 -Source https://www.nuget.org/api/v2/package -apikey apikeyapikeyapikeyapikeyapikeyapikeyapikey -NonInteractive
+WARNING: Deleting EnumUtils 1.0.0-pre2 from the 'https://www.nuget.org/api/v2/package'.
+  DELETE https://www.nuget.org/api/v2/package/EnumUtils/1.0.0-pre2
+  OK https://www.nuget.org/api/v2/package/EnumUtils/1.0.0-pre2 1103ms
+EnumUtils 1.0.0-pre2 was deleted successfully.
 ```
 
 ### Known Issues
