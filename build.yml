@@ -64,6 +64,13 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(system.defaultworkingdirectory)' 
+    #includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip' 
+    replaceExistingArchive: true 
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
