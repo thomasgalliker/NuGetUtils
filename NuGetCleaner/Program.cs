@@ -16,7 +16,7 @@ namespace NuGetCleaner
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
             var version = executingAssembly.GetName().Version.ToString();
-            var title = $"Nuget Cleaner {version}";
+            var title = $"NuGet Cleaner [{version}]";
             Console.Title = title;
 
             var exeBytes = ResourceLoader.GetEmbeddedResourceByteArray(executingAssembly, NugetExe);
@@ -43,7 +43,9 @@ namespace NuGetCleaner
                 var codeBase = executingAssembly.CodeBase;
                 var thisExe = Path.GetFileName(codeBase);
 
+                Console.Clear();
                 Console.WriteLine($"{title}{Environment.NewLine}" +
+                                  $"(c) {DateTime.Now.Year} superdev GmbH. All rights reserved.{Environment.NewLine}{Environment.NewLine}" +
                                   $"Usage: {thisExe} <PackageId> <ApiKey>{Environment.NewLine}");
 
                 return;
