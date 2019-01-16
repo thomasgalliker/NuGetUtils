@@ -78,7 +78,7 @@ steps:
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)' 
-    #includeRootFolder: true
+    includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetCleaner_$(Build.BuildNumber).zip' 
     replaceExistingArchive: true 
