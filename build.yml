@@ -70,8 +70,10 @@ steps:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: |
      **\bin\$(BuildConfiguration)\**
-     **\bin\*.nupkg
+     **\bin\*.exe
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    flattenFolders: true
 
 - task: ArchiveFiles@2
   inputs:
