@@ -1,12 +1,10 @@
 # NuGetCleaner
 [![Version](https://img.shields.io/github/release/thomasgalliker/NuGetCleaner.svg)](https://github.com/thomasgalliker/NuGetCleaner/releases)
 
-<img src="https://raw.githubusercontent.com/thomasgalliker/NuGetCleaner/develop/icon.png" width="100" height="100" alt="NuGetCleaner" align="right"></img>
-
-NuGetCleaner is a command-line utility to delete/unlist NuGet packages.
+NuGetCleaner is a command-line utility to delete/unlist NuGet pre-release packages. In order to minimize the number of alpha and beta releases on NuGet, it's a good practice to clean-up old pre-releases. The aim of NuGetCleaner is to remove all pre-release versions of a certain NuGet package. It is recommended to run this utility *after* the successful release of a stable package version. 
 
 ### Download
-This library is available on github: https://github.com/thomasgalliker/NuGetCleaner/releases
+This zipped executable of NuGetCleaner is available on github releases: https://github.com/thomasgalliker/NuGetCleaner/releases
 
 
 ### Usage
@@ -38,6 +36,7 @@ EnumUtils 1.0.0-pre2 was deleted successfully.
 - Issue 1: Response status code does not indicate success: 403 (The specified API key is invalid, has expired, or does not have permission to access the specified package.).
   - Your NuGet API Key is invalid, has expired or the premission does not allow to unlist the selected package
   - Create a new API Key: Select Scopes "Unlist package", Select Packages: The package(s) you want to be able to unlist with this key.
+- Issue 2: There is no fine-grained filter to include or exclude certain package versions. For simlicity, this feature is not (yet) available. Feel free to fork this repository and create a Pull Request with your changes.
 
 ### License
 This project is Copyright &copy; 2019 [Thomas Galliker](https://ch.linkedin.com/in/thomasgalliker). Free for non-commercial use. For commercial use please contact the author.
