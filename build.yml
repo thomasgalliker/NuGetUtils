@@ -69,7 +69,6 @@ steps:
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: |
-     **\bin\$(BuildConfiguration)\**
      **\bin\*.exe
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
