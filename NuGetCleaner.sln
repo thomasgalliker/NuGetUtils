@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetCleaner.CLI", "NuGetCleaner.CLI\NuGetCleaner.CLI.csproj", "{16623F29-D828-4514-AF5E-3B7C7A95FFBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NuGetCleaner.CLI", "NuGetCleaner.CLI\NuGetCleaner.CLI.csproj", "{16623F29-D828-4514-AF5E-3B7C7A95FFBE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{57FDF38B-5B5B-40B8-9A94-642FA96C727B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetCleaner.CLI.Tests", "Tests\NuGetCleaner.CLI.Tests\NuGetCleaner.CLI.Tests.csproj", "{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +31,16 @@ Global
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55A0C1F4-E3CF-4283-AFD8-DE7BC68F231C} = {57FDF38B-5B5B-40B8-9A94-642FA96C727B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E111C2B-E792-45F9-99F9-00D127A270A5}

@@ -37,7 +37,9 @@ namespace NuGetCleaner.CLI.Commands
             {
                 var apiKey = context.ParseResult.ValueForOption(CommonOptions.ApiKeyOption);
                 var packageId = context.ParseResult.ValueForOption(CommonOptions.PackageIdOption);
-                var preRelease = context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption);
+
+                var hasPreRelease = context.ParseResult.Tokens.Any(t => CommonOptions.PreReleaseOption.Aliases.Contains(t.Value));
+                var preRelease = hasPreRelease ? context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption) : (bool?)null;
                 var confirm = context.ParseResult.ValueForOption(CommonOptions.ConfirmOption);
                 var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease);
 
