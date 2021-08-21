@@ -19,6 +19,7 @@ namespace NuGetCleaner.CLI.Commands
             this.AddOption(CommonOptions.ApiKeyOption);
             this.AddOption(CommonOptions.PackageIdOption);
             this.AddOption(CommonOptions.PreReleaseOption);
+            this.AddOption(CommonOptions.ConfirmOption);
         }
 
         private class UnlistCommandHandler : ICommandHandler
@@ -43,16 +44,20 @@ namespace NuGetCleaner.CLI.Commands
                 var count = searchResult.Data.Sum(d => d.Versions.Count);
                 if (count > 0)
                 {
-                    var searchResultLogMessage = new StringBuilder();
-                    foreach (var data in searchResult.Data)
+                    if (!confirm)
                     {
-                        foreach (var version in data.Versions)
-                        {
-                            searchResultLogMessage.AppendLine($"{data.Title} {version.Version}");
-                        }
-                    }
-                    this.logger.LogInformation(searchResultLogMessage.ToString());
 
+                        var searchResultLogMessage = new StringBuilder();
+                        foreach (var data in searchResult.Data)
+                        {
+                            foreach (var version in data.Versions)
+                            {
+                                searchResultLogMessage.AppendLine($"{data.Title} {version.Version}");
+                            }
+                        }
+
+                        this.logger.LogInformation(searchResultLogMessage.ToString());
+                    }
 
                     if (confirm || Interactive.Confirmation($"Do you want to unlist {count} package{(count > 1 ? "s" : "")}?", "yes", "no"))
                     {

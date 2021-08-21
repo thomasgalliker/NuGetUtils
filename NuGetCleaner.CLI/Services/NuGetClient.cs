@@ -82,6 +82,8 @@ namespace NuGetCleaner.CLI.Services
                 throw new ArgumentNullException(nameof(version));
             }
 
+            this.logger.LogInformation($"DeletePackageAsync: packageId={packageId}, version={version}");
+
             var request = new HttpRequestMessage(HttpMethod.Delete, $"https://www.nuget.org/api/v2/package/{packageId}/{version}");
             request.Headers.Add("X-NuGet-ApiKey", apiKey ?? this.apiKey);
 
