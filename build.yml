@@ -100,7 +100,7 @@ steps:
   displayName: 'Pack NuGetCleaner.CLI'
   inputs:
     command: pack
-    packagesToPack: NuGetCleaner/NuGetCleaner.CLI.csproj
+    packagesToPack: NuGetCleaner.CLI/NuGetCleaner.CLI.csproj
     versioningScheme: byEnvVar
     versionEnvVar: semVersion
 
