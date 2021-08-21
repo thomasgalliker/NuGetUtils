@@ -36,7 +36,7 @@ namespace NuGetCleaner.Services
             var preReleaseParameter = preRelease != null ? $"&prerelease={Convert.ToString(preRelease)}" : "";
             var uri = $"https://azuresearch-usnc.nuget.org/query?q=packageid:{packageId}{preReleaseParameter}&semVerLevel=2.0.0";
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await this.httpClient.SendAsync(request);
 
             this.logger.LogInformation($"SearchAsync returned StatusCode={(int)response.StatusCode} ({response.StatusCode})");

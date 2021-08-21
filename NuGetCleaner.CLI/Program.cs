@@ -29,7 +29,7 @@ namespace NuGetCleaner.CLI
                 $"Unlists NuGet packages using command line arguments. {Environment.NewLine}" +
                 $"(c){DateTime.Now.Year} superdev GmbH. All rights reserved.{Environment.NewLine}";
 
-            rootCommand.AddGlobalOption(CommonOptions.Silent);
+            rootCommand.AddGlobalOption(CommonOptions.SilentOption);
 
             var commandLineBuilder = new CommandLineBuilder(rootCommand);
 
