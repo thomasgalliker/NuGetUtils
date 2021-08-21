@@ -99,7 +99,6 @@ steps:
   inputs:
     command: test
     projects: '**/*.Tests.csproj'
-    arguments: '--framework net5.0'
 
 - task: DotNetCoreCLI@2
   displayName: 'Pack NuGetCleaner'
