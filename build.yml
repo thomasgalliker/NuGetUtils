@@ -116,7 +116,7 @@ steps:
   displayName: 'Publish Single File App: NuGetCleaner.CLI'
   inputs:
     command: publish
-    arguments: 'NuGetCleaner.CLI/NuGetCleaner.CLI.csproj -f net5.0 -r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\'
+    arguments: 'NuGetCleaner.CLI/NuGetCleaner.CLI.csproj -r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
