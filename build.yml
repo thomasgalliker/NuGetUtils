@@ -97,6 +97,14 @@ steps:
     arguments: '--framework net5.0'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Pack NuGetCleaner'
+  inputs:
+    command: pack
+    packagesToPack: NuGetCleaner/NuGetCleaner.csproj
+    versioningScheme: byEnvVar
+    versionEnvVar: semVersion
+
+- task: DotNetCoreCLI@2
   displayName: 'Pack NuGetCleaner.CLI'
   inputs:
     command: pack
