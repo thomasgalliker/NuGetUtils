@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace NuGetCleaner.Model
 {
-    [DebuggerDisplay("SearchResult: {this.Data.Title}")]
+    [DebuggerDisplay("SearchResult: Count={this.Data.Count}")]
     public class SearchResult
     {
         public SearchResult()
