@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetCleaner", "NuGetCleaner\NuGetCleaner.csproj", "{E16A0F72-849E-4F0F-9F81-249052D18C23}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8634CC1E-1F13-4C1E-994A-5153B6FFE031}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E16A0F72-849E-4F0F-9F81-249052D18C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E16A0F72-849E-4F0F-9F81-249052D18C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E16A0F72-849E-4F0F-9F81-249052D18C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E16A0F72-849E-4F0F-9F81-249052D18C23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16623F29-D828-4514-AF5E-3B7C7A95FFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
