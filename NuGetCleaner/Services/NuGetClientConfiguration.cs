@@ -1,4 +1,4 @@
-﻿namespace NuGetCleaner.CLI.Services
+﻿namespace NuGetCleaner.Services
 {
     public class NuGetClientConfiguration : INuGetClientConfiguration
     {
@@ -7,9 +7,5 @@
         }
         public string ApiKey { get; set; }
 
-    }
-    public interface INuGetClientConfiguration
-    {
-        string ApiKey { get; set; }
     }
 }

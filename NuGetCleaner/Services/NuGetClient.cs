@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,7 +9,7 @@ using Newtonsoft.Json;
 using NuGetCleaner.CLI.Model;
 using NuGetCleaner.Model;
 
-namespace NuGetCleaner.CLI.Services
+namespace NuGetCleaner.Services
 {
     public class NuGetClient : INuGetClient
     {
@@ -97,7 +96,7 @@ namespace NuGetCleaner.CLI.Services
             ////{
             ////    case HttpStatusCode.OK:
             ////    case HttpStatusCode.Accepted:
-                    
+
             ////    case HttpStatusCode.Unauthorized:
             ////        throw new UnauthorizedAccessException(response.ReasonPhrase);
             ////    case HttpStatusCode.Forbidden:

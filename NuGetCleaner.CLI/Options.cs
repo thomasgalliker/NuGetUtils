@@ -1,5 +1,5 @@
 ﻿using System.CommandLine;
-using NuGetCleaner.CLI.Services;
+using NuGetCleaner.Services;
 
 namespace NuGetCleaner.CLI
 {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NuGetCleaner.CLI.Internal;
 using NuGetCleaner.CLI.Model;
-using NuGetCleaner.CLI.Services;
+using NuGetCleaner.Services;
 
 namespace NuGetCleaner.CLI.Commands
 {
@@ -70,7 +70,7 @@ namespace NuGetCleaner.CLI.Commands
                                 try
                                 {
                                     var semanticVersion = SemanticVersion.Parse(version.Version);
-                                    await nugetClient.DeletePackageAsync(apiKey, packageId, semanticVersion);
+                                    await this.nugetClient.DeletePackageAsync(apiKey, packageId, semanticVersion);
                                 }
                                 catch (Exception ex)
                                 {

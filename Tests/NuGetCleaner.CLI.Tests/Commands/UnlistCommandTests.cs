@@ -4,11 +4,11 @@ using Moq;
 using Moq.AutoMock;
 using NuGetCleaner.CLI.Commands;
 using NuGetCleaner.CLI.Model;
-using NuGetCleaner.CLI.Services;
-using NuGetCleaner.CLI.Tests.Testdata;
+using NuGetCleaner.Services;
+using NuGetCleaner.Testdata;
 using Xunit;
 
-namespace NuGetCleaner.CLI.Tests
+namespace NuGetCleaner.CLI.Tests.Commands
 {
     public class UnlistCommandTests
     {

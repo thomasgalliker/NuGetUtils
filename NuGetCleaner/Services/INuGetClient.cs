@@ -2,7 +2,7 @@
 using NuGetCleaner.CLI.Model;
 using NuGetCleaner.Model;
 
-namespace NuGetCleaner.CLI.Services
+namespace NuGetCleaner.Services
 {
     public interface INuGetClient
     {

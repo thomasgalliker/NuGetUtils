@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using NuGetCleaner.Model;
 
-namespace NuGetCleaner.CLI.Tests.Testdata
+namespace NuGetCleaner.Testdata
 {
-    internal class SearchResults
+    public class SearchResults
     {
-        internal static SearchResult GetTestSearchResult(string packageId, bool preRelease)
+        public static SearchResult GetTestSearchResult(string packageId, bool preRelease)
         {
             return new SearchResult
             {

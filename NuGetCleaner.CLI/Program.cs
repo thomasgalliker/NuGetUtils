@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using NuGetCleaner.CLI.Commands;
-using NuGetCleaner.CLI.Services;
+using NuGetCleaner.Services;
 
 namespace NuGetCleaner.CLI
 {
