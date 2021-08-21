@@ -14,15 +14,15 @@ namespace NuGetCleaner.CLI.Services
 {
     public class NuGetClient : INuGetClient
     {
+        private readonly ILogger logger;
+        private readonly HttpClient httpClient;
         private readonly string apiKey;
-        private readonly ILogger<NuGetClient> logger;
-
-        public static HttpClient HttpClient { private get; set; }
 
         public NuGetClient(ILogger<NuGetClient> logger, INuGetClientConfiguration configuration)
         {
-            HttpClient ??= new HttpClient();
             this.logger = logger;
+            this.httpClient ??= new HttpClient();
+            this.apiKey = configuration.ApiKey;
         }
 
         public async Task<SearchResult> SearchAsync(string packageId, bool? preRelease)
@@ -38,7 +38,7 @@ namespace NuGetCleaner.CLI.Services
             var uri = $"https://azuresearch-usnc.nuget.org/query?q=packageid:{packageId}{preReleaseParameter}&semVerLevel=2.0.0";
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-            var response = await HttpClient.SendAsync(request);
+            var response = await this.httpClient.SendAsync(request);
 
             this.logger.LogInformation($"SearchAsync returned StatusCode={(int)response.StatusCode} ({response.StatusCode})");
 
@@ -82,14 +82,14 @@ namespace NuGetCleaner.CLI.Services
                 throw new ArgumentNullException(nameof(version));
             }
 
-            this.logger.LogInformation($"DeletePackageAsync: packageId={packageId}, version={version}");
+            this.logger.LogInformation($"DeletePackageAsync for packageId={packageId}, version={version}");
 
             var request = new HttpRequestMessage(HttpMethod.Delete, $"https://www.nuget.org/api/v2/package/{packageId}/{version}");
             request.Headers.Add("X-NuGet-ApiKey", apiKey ?? this.apiKey);
 
-            var response = await HttpClient.SendAsync(request);
+            var response = await this.httpClient.SendAsync(request);
 
-            this.logger.LogInformation($"DeletePackageAsync returned StatusCode={(int)response.StatusCode} ({response.StatusCode})");
+            this.logger.LogInformation($"DeletePackageAsync for packageId={packageId}, version={version} returned StatusCode={(int)response.StatusCode} ({response.StatusCode})");
 
             response.EnsureSuccessStatusCode();
 
