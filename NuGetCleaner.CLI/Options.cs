@@ -29,7 +29,7 @@ namespace NuGetCleaner.CLI
         public static readonly Option<bool> ConfirmOption = new Option<bool>(
             aliases: new[] { "--confirm" }, 
             getDefaultValue: () => false, 
-            description: "Filter pre-release packages")
+            description: "Confirms all user interactions")
         {
             Name = nameof(ConfirmOption),
             IsRequired = false,

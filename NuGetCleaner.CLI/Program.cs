@@ -2,12 +2,9 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using NuGetCleaner.CLI.Commands;
 using NuGetCleaner.Services;
 
@@ -17,6 +14,9 @@ namespace NuGetCleaner.CLI
     {
         static async Task<int> Main(string[] args)
         {
+            Console.WriteLine(
+                $"(c){DateTime.Now.Year} superdev GmbH. All rights reserved.{Environment.NewLine}");
+
             var serviceProvider = BuildServiceProvider();
             var parser = BuildParser(serviceProvider);
             return await parser.InvokeAsync(args).ConfigureAwait(false);
@@ -25,9 +25,7 @@ namespace NuGetCleaner.CLI
         private static Parser BuildParser(IServiceProvider serviceProvider)
         {
             var rootCommand = new RootCommand();
-            rootCommand.Description = 
-                $"Unlists NuGet packages using command line arguments. {Environment.NewLine}" +
-                $"(c){DateTime.Now.Year} superdev GmbH. All rights reserved.{Environment.NewLine}";
+            rootCommand.Description = $"NuGet Cleaner/Unlist Utility.";
 
             rootCommand.AddGlobalOption(CommonOptions.SilentOption);
 
