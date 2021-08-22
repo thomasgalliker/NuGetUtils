@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace NuGetUtils.CLI.Model
+namespace NuGetUtils.Model
 {
+    /// <summary>
+    /// Reference: https://semver.org/
+    /// </summary>
     public class SemanticVersion : IComparable<SemanticVersion>
     {
-        private static Regex ParseRegex => new Regex(@"([0-9]+)\.([0-9]+)\.([0-9]+)(\.([0-9]+))?(\-([0-9A-Za-z]+))?(\+([0-9A-Za-z]+))?", RegexOptions.Compiled);
+        private static Regex SemanticVersionRegex => new Regex(@"^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$", RegexOptions.Compiled);
 
         /// <summary>
         /// Parses the string and creates a SemanticVersion from it
@@ -14,29 +17,21 @@ namespace NuGetUtils.CLI.Model
         /// <returns>The parsed SemanticVersion, or null if the format is incorrect</returns>
         public static SemanticVersion Parse(string versionString)
         {
-            var match = ParseRegex.Match(versionString);
-            if (match != null)
+            var match = SemanticVersionRegex.Match(versionString);
+            if (match == null || match.Success == false)
             {
-                var version = new SemanticVersion();
-                version.Major = int.Parse(match.Groups[1].Value);
-                version.Minor = int.Parse(match.Groups[2].Value);
-                version.Patch = int.Parse(match.Groups[3].Value);
-
-                int build;
-                if (int.TryParse(match.Groups[5].Value, out build))
-                {
-                    version.Build = build;
-                }
-
-                version.PreReleaseTag = match.Groups[7].Value;
-                version.Metadata = match.Groups[9].Value;
-
-                return version;
+                throw new ArgumentException($"Semantic version format is invalid: \"{versionString}\". Expected equivalent to \"1.2.3\" or \"1.2.3-alpha.4\". See also: https://semver.org/");
             }
-            else
-            {
-                return null;
-            }
+
+            var semanticVersion = new SemanticVersion();
+            semanticVersion.Major = int.Parse(match.Groups["major"].ToString());
+            semanticVersion.Minor = int.Parse(match.Groups["minor"].ToString());
+            semanticVersion.Patch = int.Parse(match.Groups["patch"].ToString());
+
+            semanticVersion.PreRelease = match.Groups["prerelease"].ToString();
+            semanticVersion.BuildMetadata = match.Groups["buildmetadata"].ToString();
+
+            return semanticVersion;
         }
 
         /// <summary>
@@ -64,57 +59,40 @@ namespace NuGetUtils.CLI.Model
         public int Patch { get; set; }
 
         /// <summary>
-        /// The build number.
-        /// </summary>
-        /// <remarks>
-        /// Not strictly part of the semantic version, but part of other versioning methods
-        /// </remarks>
-        public int? Build { get; set; }
-
-        /// <summary>
         /// The tag indicating the type and version of the prerelease
         /// </summary>
-        public string PreReleaseTag { get; set; }
+        public string PreRelease { get; set; }
 
-        public bool IsPreRelease => !string.IsNullOrEmpty(this.PreReleaseTag);
+        public bool IsPreRelease => !string.IsNullOrEmpty(this.PreRelease);
+
         /// <summary>
         /// Additional version metadata
         /// </summary>
-        public string Metadata { get; set; }
+        public string BuildMetadata { get; set; }
 
         public override string ToString()
         {
-            string buildPart;
-            if (this.Build.HasValue)
+            string preRelease;
+            if (!string.IsNullOrEmpty(this.PreRelease))
             {
-                buildPart = "." + this.Build.Value.ToString();
+                preRelease = "-" + this.PreRelease;
             }
             else
             {
-                buildPart = "";
+                preRelease = "";
             }
 
-            string prerelease;
-            if (!string.IsNullOrEmpty(this.PreReleaseTag))
+            string buildMetadata;
+            if (!string.IsNullOrEmpty(this.BuildMetadata))
             {
-                prerelease = "-" + this.PreReleaseTag;
+                buildMetadata = "+" + this.BuildMetadata;
             }
             else
             {
-                prerelease = "";
+                buildMetadata = "";
             }
 
-            string metadata;
-            if (!string.IsNullOrEmpty(this.Metadata))
-            {
-                metadata = "+" + this.Metadata;
-            }
-            else
-            {
-                metadata = "";
-            }
-
-            return $"{this.Major.ToString()}.{this.Minor.ToString()}.{this.Patch.ToString()}{buildPart}{prerelease}{metadata}";
+            return $"{this.Major}.{this.Minor}.{this.Patch}{preRelease}{buildMetadata}";
         }
 
         /// <summary>
@@ -136,18 +114,34 @@ namespace NuGetUtils.CLI.Model
         public int CompareTo(SemanticVersion other)
         {
             if (other == null)
+            {
                 throw new ArgumentException(nameof(other));
+            }
 
             if (this.Major != other.Major)
+            {
                 return this.Major.CompareTo(other.Major);
+            }
+
             if (this.Minor != other.Minor)
+            {
                 return this.Minor.CompareTo(other.Minor);
+            }
+
             if (this.Patch != other.Patch)
+            {
                 return this.Patch.CompareTo(other.Patch);
-            if (this.PreReleaseTag != other.PreReleaseTag)
-                return this.PreReleaseTag.CompareTo(other.PreReleaseTag);
-            if (this.Metadata != other.Metadata)
-                return this.Metadata.CompareTo(other.Metadata);
+            }
+
+            if (this.PreRelease != other.PreRelease)
+            {
+                return this.PreRelease.CompareTo(other.PreRelease);
+            }
+
+            if (this.BuildMetadata != other.BuildMetadata)
+            {
+                return this.BuildMetadata.CompareTo(other.BuildMetadata);
+            }
 
             return 0;
         }
@@ -155,12 +149,12 @@ namespace NuGetUtils.CLI.Model
         public override bool Equals(object obj)
         {
             var other = obj as SemanticVersion;
-            return other != null && this.Major == other.Major && this.Minor == other.Minor && this.Patch == other.Patch && this.Build == other.Build && this.PreReleaseTag == other.PreReleaseTag && this.Metadata == other.Metadata;
+            return other != null && this.Major == other.Major && this.Minor == other.Minor && this.Patch == other.Patch && this.PreRelease == other.PreRelease && this.BuildMetadata == other.BuildMetadata;
         }
 
         public override int GetHashCode()
         {
-            return this.Major.GetHashCode() ^ this.Minor.GetHashCode() ^ this.Patch.GetHashCode() ^ this.Build.GetHashCode() ^ this.PreReleaseTag.GetHashCode() ^ this.Metadata.GetHashCode();
+            return this.Major.GetHashCode() ^ this.Minor.GetHashCode() ^ this.Patch.GetHashCode() ^ this.PreRelease.GetHashCode() ^ this.BuildMetadata.GetHashCode();
         }
     }
 }
