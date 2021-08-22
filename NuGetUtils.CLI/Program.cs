@@ -15,11 +15,19 @@ namespace NuGetUtils.CLI
         static async Task<int> Main(string[] args)
         {
             Console.WriteLine(
-                $"(c){DateTime.Now.Year} superdev GmbH. All rights reserved.{Environment.NewLine}");
+                $"NuGetUtils.CLI version {typeof(Program).Assembly.GetName().Version} {Environment.NewLine}" +
+                $"Copyright(C) superdev GmbH. All rights reserved.{Environment.NewLine}");
 
             var serviceProvider = BuildServiceProvider();
             var parser = BuildParser(serviceProvider);
-            return await parser.InvokeAsync(args).ConfigureAwait(false);
+            var result = await parser.InvokeAsync(args).ConfigureAwait(false);
+
+            if (args.Length == 0)
+            {
+                Console.ReadKey();
+            }
+
+            return result;
         }
 
         private static Parser BuildParser(IServiceProvider serviceProvider)
