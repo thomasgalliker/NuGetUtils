@@ -25,7 +25,7 @@ trigger:
     - Samples/*
 
 variables:
-  solution: 'NuGetCleaner.sln'
+  solution: 'NuGetUtils.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   majorVersion: 2
@@ -58,7 +58,7 @@ steps:
     InsertAttributes: true
     FileEncoding: 'auto'
     WriteBOM: false
-    Product: 'NuGetCleaner'
+    Product: 'NuGetUtils'
     Description: ''
     Company: 'superdev GmbH'
     Copyright: '(c) $(date:YYYY) superdev GmbH'
@@ -97,26 +97,26 @@ steps:
     arguments: '--no-restore --no-build --configuration $(buildConfiguration)'
     
 - task: DotNetCoreCLI@2
-  displayName: 'Pack NuGetCleaner'
+  displayName: 'Pack NuGetUtils'
   inputs:
     command: pack
-    packagesToPack: NuGetCleaner/NuGetCleaner.csproj
+    packagesToPack: NuGetUtils/NuGetUtils.csproj
     versioningScheme: byEnvVar
     versionEnvVar: semVersion
 
 - task: DotNetCoreCLI@2
-  displayName: 'Pack NuGetCleaner.CLI'
+  displayName: 'Pack NuGetUtils.CLI'
   inputs:
     command: pack
-    packagesToPack: NuGetCleaner.CLI/NuGetCleaner.CLI.csproj
+    packagesToPack: NuGetUtils.CLI/NuGetUtils.CLI.csproj
     versioningScheme: byEnvVar
     versionEnvVar: semVersion
     
 - task: DotNetCoreCLI@2
-  displayName: 'Publish Single File App: NuGetCleaner.CLI'
+  displayName: 'Publish Single File App: NuGetUtils.CLI'
   inputs:
     command: publish
-    projects: 'NuGetCleaner.CLI/NuGetCleaner.CLI.csproj'
+    projects: 'NuGetUtils.CLI/NuGetUtils.CLI.csproj'
     publishWebProjects: False
     arguments: '-r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\'
     zipAfterPublish: True

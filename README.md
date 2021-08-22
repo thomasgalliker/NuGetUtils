@@ -1,22 +1,22 @@
-# NuGetCleaner
-[![Version](https://img.shields.io/github/release/thomasgalliker/NuGetCleaner.svg)](https://github.com/thomasgalliker/NuGetCleaner/releases)
+# NuGetUtils
+[![Version](https://img.shields.io/github/release/thomasgalliker/NuGetUtils.svg)](https://github.com/thomasgalliker/NuGetUtils/releases)
 
-NuGetCleaner is a command-line utility to delete/unlist NuGet pre-release packages. In order to minimize the number of alpha and beta releases on NuGet, it's a good practice to clean-up old pre-releases. The aim of NuGetCleaner is to remove all pre-release versions of a certain NuGet package. It is recommended to run this utility *after* the successful release of a stable package version. 
+NuGetUtils is a command-line utility to delete/unlist NuGet pre-release packages. In order to minimize the number of alpha and beta releases on NuGet, it's a good practice to clean-up old pre-releases. The aim of NuGetUtils is to remove all pre-release versions of a certain NuGet package. It is recommended to run this utility *after* the successful release of a stable package version. 
 
 ### Download
-This zipped executable of NuGetCleaner is available on github releases: https://github.com/thomasgalliker/NuGetCleaner/releases
+This zipped executable of NuGetUtils is available on github releases: https://github.com/thomasgalliker/NuGetUtils/releases
 
 
 ### Usage
-Open a new Command Prompt and start NuGetCleaner.exe with the parameters <PackageId> where you put the ID of your NuGet package and the <ApiKey> which is used for authorization purposes. Make sure the API Key has appropriate rights to "Unlist packages" for the selected NuGet package.
+Open a new Command Prompt and start NuGetUtils.exe with the parameters <PackageId> where you put the ID of your NuGet package and the <ApiKey> which is used for authorization purposes. Make sure the API Key has appropriate rights to "Unlist packages" for the selected NuGet package.
 ```C#
-NuGetCleaner.exe <PackageId> <ApiKey>
+NuGetUtils.exe <PackageId> <ApiKey>
 ```
 
 **Example:**
 The following command attempts to unlist all pre-release Versions of "EnumUtils" NuGet package:
 ```C#
-NuGetCleaner.exe EnumUtils apikeyapikeyapikeyapikeyapikeyapikeyapikey
+NuGetUtils.exe EnumUtils apikeyapikeyapikeyapikeyapikeyapikeyapikey
 ```
 Console Output:
 ```C#
