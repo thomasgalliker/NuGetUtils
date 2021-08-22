@@ -116,7 +116,7 @@ steps:
   displayName: 'Publish Single File App: NuGetUtils.CLI'
   inputs:
     script: |
-      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj -r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\
+      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj --configuration $(BuildConfiguration) --runtime win10-x64 --self-contained=false /p:PublishSingleFile=true --output=bin\$(BuildConfiguration)\TESTPUBLISHFOLDER\net5.0\publish\ --no-dependencies
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
