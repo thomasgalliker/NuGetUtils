@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace NuGetUtils.CLI.Internal
 {
@@ -7,11 +8,12 @@ namespace NuGetUtils.CLI.Internal
     /// </summary>
     internal class Interactive
     {
-        internal static bool Confirmation(string message, string positiveText, string negativeText)
+        internal static async Task<bool> Confirmation(string message, string positiveText, string negativeText)
         {
             bool repeat = true;
             while (repeat)
             {
+                await Task.Delay(100);
                 Console.WriteLine($"{message} ({positiveText}/{negativeText})");
                 string output = Console.ReadLine();
                 if (output == null)

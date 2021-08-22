@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NuGetUtils.CLI.Internal;
-using NuGetUtils.CLI.Model;
+using NuGetUtils.Model;
 using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI.Commands
@@ -40,7 +40,9 @@ namespace NuGetUtils.CLI.Commands
 
                 var hasPreRelease = context.ParseResult.Tokens.Any(t => CommonOptions.PreReleaseOption.Aliases.Contains(t.Value));
                 var preRelease = hasPreRelease ? context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption) : (bool?)null;
+
                 var confirm = context.ParseResult.ValueForOption(CommonOptions.ConfirmOption);
+
                 var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease);
 
                 var count = searchResult.Data.Sum(d => d.Versions.Count);
@@ -61,7 +63,7 @@ namespace NuGetUtils.CLI.Commands
                         this.logger.LogInformation(searchResultLogMessage.ToString());
                     }
 
-                    if (confirm || Interactive.Confirmation($"Do you want to unlist {count} package{(count > 1 ? "s" : "")}?", "yes", "no"))
+                    if (confirm || await Interactive.Confirmation($"Do you want to unlist {count} package{(count > 1 ? "s" : "")}?", "yes", "no"))
                     {
                         foreach (var data in searchResult.Data)
                         {
@@ -69,8 +71,7 @@ namespace NuGetUtils.CLI.Commands
                             {
                                 try
                                 {
-                                    var semanticVersion = SemanticVersion.Parse(version.Version);
-                                    await this.nugetClient.DeletePackageAsync(apiKey, packageId, semanticVersion);
+                                    await this.nugetClient.DeletePackageAsync(apiKey, packageId, version.Version);
                                 }
                                 catch (Exception ex)
                                 {
