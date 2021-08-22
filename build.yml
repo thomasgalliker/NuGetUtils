@@ -122,9 +122,9 @@ steps:
   displayName: 'Zip Archive NuGetUtils.CLI'
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\NuGetUtils.CLI\publish'
-    includeRootFolder: true
+    includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetUtils.CLI/publish/NuGetUtils.CLI_$(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetUtils.CLI/publish/NuGetUtils.CLI_$(semVersion).zip'
     replaceExistingArchive: true
 
 - task: CopyFiles@2
