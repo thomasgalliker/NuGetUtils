@@ -23,7 +23,7 @@ namespace NuGetUtils.CLI
 
         public static readonly Option<bool> PreReleaseOption = new Option<bool>(
             aliases: new[] { "--pre" }, 
-            getDefaultValue: () => false, 
+            getDefaultValue: () => true, 
             description: 
             "Filter pre-release packages. " +
             "If true, only pre-release packages are included. " +

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Moq;
 using Moq.AutoMock;
 using NuGetUtils.CLI.Commands;
-using NuGetUtils.CLI.Model;
+using NuGetUtils.Model;
 using NuGetUtils.Services;
 using NuGetUtils.Testdata;
 using Xunit;
@@ -37,7 +37,7 @@ namespace NuGetUtils.CLI.Tests.Commands
             await unlistCommand.InvokeAsync($"--api-key {apiKey} --package {packageId} {preReleaseParameter} {confirmParameter}");
 
             // Assert
-            nugetClientMock.Verify(n => n.DeletePackageAsync(apiKey, packageId, It.IsAny<SemanticVersion>()), Times.Exactly(2));
+            nugetClientMock.Verify(n => n.DeletePackageAsync(apiKey, packageId, It.IsAny<string>()), Times.Exactly(2));
         }
 
         public class UnlistCommandTestdata : TheoryData<string, string, bool?, bool>
