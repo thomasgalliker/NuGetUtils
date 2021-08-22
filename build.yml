@@ -1,55 +1,80 @@
 ####################################################################
-# VSTS Build Configuration, Version 1.2
+# VSTS Build Configuration, Version 1.4
 #
-# (c)2018 superdev GmbH
+# (c)2021 superdev GmbH
 ####################################################################
 
-name: 1.0.$(date:yy)$(DayOfYear).$(rev:rr)
-  
-queue:
-  name: Hosted VS2017
-  demands: 
-  - msbuild
-  - visualstudio
-  - vstest
+name: $[format('{0}', variables['buildName'])]
+
+pool:
+  vmImage: 'windows-2019'
 
 trigger:
   branches:
     include:
     - master
     - develop
-    - releases/*
+    - release/*
+    - feature/*
+    - bugfix/*
 
   paths:
-    include:
-    - docs/*
     exclude:
-    - docs/README.md
+    - README.md
+    - Images/*
+    - Samples/*
 
 variables:
-  solution: 'NuGetCleaner.sln'
+  solution: 'NuGetUtils.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  buildVersionPostfix: '-pre'
+  majorVersion: 2
+  minorVersion: 0
+  patchVersion: 1
+  version: $[format('{0}.{1}.{2}', variables.majorVersion, variables.minorVersion, variables.patchVersion)]
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
+    # Versioning: 1.0.0
+    semVersion: $[format('{0}', variables.version)]
+  ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/master') }}:
+    # Versioning: 1.0.0-pre.123
+    semVersionBase: $[format('{0}-pre', variables.version)]
+    semVersionRev: $[counter(variables.semVersionBase, 0)]
+    semVersion: $[format('{0}.{1}', variables.semVersionBase, variables.semVersionRev)]
+  buildName: $[format('{0}', variables.semVersion)]
 
 steps:
-- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-Task.Assembly-Info-Task@1
-  displayName: 'Set Assembly Manifest Data'
+- task: Bash@3
+  displayName: 'Print all variables'
   inputs:
+    targetType: 'inline'
+    script: 'env | sort'
+   
+- task: Assembly-Info-NetCore@2
+  displayName: 'Update Assembly Info'
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
     FileNames: |
-     AssemblyInfo.cs
+      **/*.csproj
     InsertAttributes: true
-    Title: 'NuGetCleaner'
+    FileEncoding: 'auto'
+    WriteBOM: false
+    Product: 'NuGetUtils'
     Description: ''
     Company: 'superdev GmbH'
-    Copyright: '(c) $(date:yyyy) superdev GmbH'
+    Copyright: '(c) $(date:YYYY) superdev GmbH'
     VersionNumber: '$(Build.BuildNumber)'
     FileVersionNumber: '$(Build.BuildNumber)'
+    InformationalVersion: '$(Build.BuildNumber)'
+    PackageVersion: '$(Build.BuildNumber)'
+    LogLevel: 'verbose'
+    FailOnWarning: false
+    DisableTelemetry: false'
+
 
 - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
+  displayName: 'Use NuGet 5.x'
   inputs:
-    versionSpec: 4.4.1
+    versionSpec: 5.x
 
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
@@ -63,23 +88,55 @@ steps:
     msbuildArgs: ''
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Run UnitTests'
+  inputs:
+    command: test
+    projects: '**/*.Tests.csproj'
+    arguments: '--no-restore --no-build --configuration $(buildConfiguration)'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Pack NuGetUtils'
+  inputs:
+    command: pack
+    packagesToPack: NuGetUtils/NuGetUtils.csproj
+    versioningScheme: byEnvVar
+    versionEnvVar: semVersion
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack NuGetUtils.CLI'
+  inputs:
+    command: pack
+    packagesToPack: NuGetUtils.CLI/NuGetUtils.CLI.csproj
+    versioningScheme: byEnvVar
+    versionEnvVar: semVersion
+
+- task: CmdLine@2
+  displayName: 'Publish NuGetUtils.CLI'
+  inputs:
+    script: |
+      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj --configuration $(BuildConfiguration) --runtime win10-x64 --self-contained=false /p:PublishSingleFile=true --output=$(Build.ArtifactStagingDirectory)\NuGetUtils.CLI\publish --no-dependencies
+
+- task: ArchiveFiles@2
+  displayName: 'Zip Archive NuGetUtils.CLI'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\NuGetUtils.CLI\publish'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetUtils.CLI/publish/NuGetUtils.CLI_$(semVersion).zip'
+    replaceExistingArchive: true
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: |
-     **\bin\$(BuildConfiguration)\**\*.exe
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    flattenFolders: true
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)' 
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetCleaner_$(Build.BuildNumber).zip' 
-    replaceExistingArchive: true 
+    Contents: |
+     **\bin\$(BuildConfiguration)\**
+     **\bin\*.nupkg
+
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
