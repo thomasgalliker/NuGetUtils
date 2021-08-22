@@ -111,15 +111,12 @@ steps:
     packagesToPack: NuGetUtils.CLI/NuGetUtils.CLI.csproj
     versioningScheme: byEnvVar
     versionEnvVar: semVersion
-    
-- task: DotNetCoreCLI@2
+
+- task: CmdLine@2
   displayName: 'Publish Single File App: NuGetUtils.CLI'
   inputs:
-    command: publish
-    projects: 'NuGetUtils.CLI/NuGetUtils.CLI.csproj'
-    publishWebProjects: False
-    arguments: '-r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\'
-    zipAfterPublish: True
+    script: |
+      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj -r win10-x64 --self-contained=false /p:Configuration=$(BuildConfiguration) /p:PublishSingleFile=true /p:PublishDir=bin\Release\net5.0\publish\
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
