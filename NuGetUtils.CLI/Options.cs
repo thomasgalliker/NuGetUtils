@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI
 {
@@ -8,21 +7,25 @@ namespace NuGetUtils.CLI
     /// </summary>
     public static class CommonOptions
     {
-        public static readonly Option<string> ApiKeyOption = new Option<string>(new[] { "--api-key" }, description: "Specify NuGet API key")
+        public static readonly Option<string> ApiKeyOption = new Option<string>(
+            aliases: new[] { "--api-key" },
+            description: "Specify NuGet API key")
         {
-            Name = nameof(NuGetClientConfiguration.ApiKey),
             IsRequired = true,
         };
 
-        public static readonly Option<string> PackageIdOption = new Option<string>(new[] { "--package" }, description: "Specify the package ID")
+        public static readonly Option<string> PackageIdOption = new Option<string>(
+            aliases: new[] { "--package" },
+            description: "Specify the package ID")
         {
-            Name = nameof(PackageIdOption),
             IsRequired = true,
         };
 
-        public static readonly Option<bool> PreReleaseOption = new Option<bool>(new[] { "--pre" }, getDefaultValue: () => false, description: "Filter pre-release packages")
+        public static readonly Option<bool> PreReleaseOption = new Option<bool>(
+            aliases: new[] { "--pre" }, 
+            getDefaultValue: () => false, 
+            description: "Filter pre-release packages")
         {
-            Name = nameof(PreReleaseOption),
             IsRequired = false,
         };
         
@@ -31,7 +34,6 @@ namespace NuGetUtils.CLI
             getDefaultValue: () => false, 
             description: "Confirms all user interactions")
         {
-            Name = nameof(ConfirmOption),
             IsRequired = false,
         };
         
@@ -40,7 +42,6 @@ namespace NuGetUtils.CLI
             getDefaultValue: () => false, 
             description: "Silences command output on standard out")
         {
-            Name = nameof(SilentOption),
             IsRequired = false,
             Arity = ArgumentArity.ZeroOrOne
         };
