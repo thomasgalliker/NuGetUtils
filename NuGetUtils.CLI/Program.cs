@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NuGetUtils.CLI.Commands;
+using NuGetUtils.CLI.Extensions;
 using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI
@@ -24,7 +25,7 @@ namespace NuGetUtils.CLI
 
             if (args.Length == 0)
             {
-                Console.ReadKey();
+                result = await parser.RunInteractiveMode();
             }
 
             return result;
@@ -33,7 +34,7 @@ namespace NuGetUtils.CLI
         private static Parser BuildParser(IServiceProvider serviceProvider)
         {
             var rootCommand = new RootCommand();
-            rootCommand.Description = $"NuGet Cleaner/Unlist Utility.";
+            rootCommand.Description = $"Simplify nuget package administration.";
 
             rootCommand.AddGlobalOption(CommonOptions.SilentOption);
 
