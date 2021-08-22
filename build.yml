@@ -113,10 +113,19 @@ steps:
     versionEnvVar: semVersion
 
 - task: CmdLine@2
-  displayName: 'Publish Single File App: NuGetUtils.CLI'
+  displayName: 'Publish NuGetUtils.CLI'
   inputs:
     script: |
-      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj --configuration $(BuildConfiguration) --runtime win10-x64 --self-contained=false /p:PublishSingleFile=true --output=bin\$(BuildConfiguration)\TESTPUBLISHFOLDER\net5.0\publish\ --no-dependencies
+      dotnet publish NuGetUtils.CLI/NuGetUtils.CLI.csproj --configuration $(BuildConfiguration) --runtime win10-x64 --self-contained=false /p:PublishSingleFile=true --output=$(Build.ArtifactStagingDirectory)\NuGetUtils.CLI\publish --no-dependencies
+
+- task: ArchiveFiles@2
+  displayName: 'Zip Archive NuGetUtils.CLI'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\NuGetUtils.CLI\publish'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/NuGetUtils.CLI/publish/NuGetUtils.CLI_$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
