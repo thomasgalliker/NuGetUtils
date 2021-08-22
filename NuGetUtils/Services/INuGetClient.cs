@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using NuGetUtils.CLI.Model;
 using NuGetUtils.Model;
 
 namespace NuGetUtils.Services
@@ -8,6 +7,6 @@ namespace NuGetUtils.Services
     {
         Task<SearchResult> SearchAsync(string packageId, bool? preRelease);
 
-        Task DeletePackageAsync(string apiKey, string packageId, SemanticVersion version);
+        Task DeletePackageAsync(string apiKey, string packageId, string version);
     }
 }

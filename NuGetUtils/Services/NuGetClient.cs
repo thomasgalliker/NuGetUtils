@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NuGetUtils.CLI.Model;
 using NuGetUtils.Model;
 
 namespace NuGetUtils.Services
@@ -51,9 +49,24 @@ namespace NuGetUtils.Services
                 {
                     var preReleaseVersions = data.Versions.Select(v =>
                     {
-                        var semanticVersion = SemanticVersion.Parse(v.Version);
-                        return (Version: v, SemanticVersion: semanticVersion);
-                    }).Where(x => x.SemanticVersion.IsPreRelease == preReleaseValue)
+                        bool? isPreRelease = null;
+                        try
+                        {
+                            // TODO: Implement SemanticVersion.TryParse to avoid exception-driven flow
+                            var semanticVersion = SemanticVersion.Parse(v.Version);
+                            isPreRelease = semanticVersion.IsPreRelease;
+                        }
+                        catch
+                        {
+                            var dashIndex = v.Version.IndexOf('-');
+                            if (dashIndex > 0)
+                            {
+                                isPreRelease = true;
+                            }
+                        }
+
+                        return (Version: v, IsPreRelease: isPreRelease);
+                    }).Where(x => x.IsPreRelease == preReleaseValue)
                       .Select(x => x.Version)
                       .ToList();
 
@@ -64,7 +77,7 @@ namespace NuGetUtils.Services
             return searchResult;
         }
 
-        public async Task DeletePackageAsync(string apiKey, string packageId, SemanticVersion version)
+        public async Task DeletePackageAsync(string apiKey, string packageId, string version)
         {
             if (apiKey == null)
             {
@@ -83,7 +96,8 @@ namespace NuGetUtils.Services
 
             this.logger.LogInformation($"DeletePackageAsync for packageId={packageId}, version={version}");
 
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"https://www.nuget.org/api/v2/package/{packageId}/{version}");
+            var uri = $"https://www.nuget.org/api/v2/package/{packageId}/{version}";
+            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             request.Headers.Add("X-NuGet-ApiKey", apiKey ?? this.apiKey);
 
             var response = await this.httpClient.SendAsync(request);
