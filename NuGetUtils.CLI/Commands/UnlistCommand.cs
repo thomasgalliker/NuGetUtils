@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NuGetUtils.CLI.Internal;
-using NuGetUtils.Model;
 using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI.Commands

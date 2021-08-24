@@ -5,6 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SearchResults\crossplatformlibrary.fodytracingaspect.all.json" />
+    <None Remove="SearchResults\crossplatformlibrary.fodytracingaspect.stable.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SearchResults\crossplatformlibrary.fodytracingaspect.all.json" />
+    <EmbeddedResource Include="SearchResults\crossplatformlibrary.fodytracingaspect.stable.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ResourceLoader" Version="3.1.20095.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\NuGetUtils\NuGetUtils.csproj" />
   </ItemGroup>
 
