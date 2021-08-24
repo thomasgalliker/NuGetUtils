@@ -24,9 +24,9 @@ namespace NuGetUtils.Tests
         }
 
         [Theory]
-        [InlineData("CrossPlatformLibrary.Market", true)]
-        [InlineData("CrossPlatformLibrary.Market", false)]
-        [InlineData("CrossPlatformLibrary.Market", null)]
+        [InlineData("NuGetUtils", true)]
+        [InlineData("NuGetUtils", false)]
+        [InlineData("NuGetUtils", null)]
         public async Task ShouldSearchAsync(string packageId, bool? preRelease)
         {
             // Arrange
