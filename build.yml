@@ -28,21 +28,17 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   majorVersion: 2
-  minorVersion: 2
+  minorVersion: 3
+  patchVersion: $[counter(format('{0}.{1}', variables.majorVersion, variables.minorVersion), 0)]
   ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
     # Versioning: 1.0.0
-    patchVersion: $[counter(format('{0}-{1}.{2}', variables['Build.SourceBranch'], variables.majorVersion, variables.minorVersion), 0)]
     semVersion: $[format('{0}.{1}.{2}', variables.majorVersion, variables.minorVersion, variables.patchVersion)]
   ${{ if and(ne(variables['Build.SourceBranch'], 'refs/heads/master'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))) }}:
-    # Versioning: 1.0.0-pre.2
-    semVersionBase: $[format('{0}.{1}.{2}-pre', variables.majorVersion, variables.minorVersion, 0)]
-    semVersionRev: $[counter(variables.semVersionBase, 0)]
-    semVersion: $[format('{0}.{1}', variables.semVersionBase, variables.semVersionRev)]
+    # Versioning: 1.0.0-pre
+    semVersion: $[format('{0}.{1}.{2}-pre', variables.majorVersion, variables.minorVersion, variables.patchVersion)]
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
-    # Versioning: 1.0.0-pr.000000001.2
-    semVersionBase: $[format('{0}.{1}.{2}-pr.{3}', variables.majorVersion, variables.minorVersion, 0, variables['System.PullRequest.PullRequestId'])]
-    semVersionRev: $[counter(variables.semVersionBase, 0)]
-    semVersion: $[format('{0}.{1}', variables.semVersionBase, variables.semVersionRev)]
+    # Versioning: 1.0.0-pr.000000001
+    semVersion: $[format('{0}.{1}.{2}-pr.{3}', variables.majorVersion, variables.minorVersion, variables.patchVersion, variables['System.PullRequest.PullRequestId'])]
   buildName: $[format('{0}', variables.semVersion)]
 
 steps:
