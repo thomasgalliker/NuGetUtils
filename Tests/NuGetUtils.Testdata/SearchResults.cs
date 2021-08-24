@@ -1,19 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
-using Newtonsoft.Json;
 using NuGetUtils.Model;
 
 namespace NuGetUtils.Testdata
 {
     public class SearchResults
     {
-        public static SearchResult GetCrossplatformLibrary_FodyTracingAspect(bool preRelease)
-        {
-            var resourceName = preRelease ? "crossplatformlibrary.fodytracingaspect.pre.json" : "crossplatformlibrary.fodytracingaspect.all.json";
-            var jsonContent = ResourceLoader.Current.GetEmbeddedResourceString(typeof(SearchResults).Assembly, resourceName);
-            return JsonConvert.DeserializeObject<SearchResult>(jsonContent);
-        }
-
         public static SearchResult GetTestSearchResult(string packageId, bool preRelease)
         {
             return new SearchResult
