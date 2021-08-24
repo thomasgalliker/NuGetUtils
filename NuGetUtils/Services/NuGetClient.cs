@@ -31,7 +31,7 @@ namespace NuGetUtils.Services
 
             this.logger.LogInformation($"SearchAsync: packageId={packageId}, preRelease={preRelease}");
 
-            var preReleaseParameter = preRelease != null ? $"&prerelease={Convert.ToString(preRelease)}" : "";
+            var preReleaseParameter = (preRelease == null || preRelease == true) ? $"&prerelease=true" : "";
             var uri = $"https://azuresearch-usnc.nuget.org/query?q=packageid:{packageId}{preReleaseParameter}&semVerLevel=2.0.0";
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -47,7 +47,7 @@ namespace NuGetUtils.Services
             {
                 foreach (var data in searchResult.Data)
                 {
-                    var preReleaseVersions = data.Versions.Select(v =>
+                    var selectedVersions = data.Versions.Select(v =>
                     {
                         bool? isPreRelease = null;
                         try
@@ -70,7 +70,7 @@ namespace NuGetUtils.Services
                       .Select(x => x.Version)
                       .ToList();
 
-                    data.Versions = preReleaseVersions;
+                    data.Versions = selectedVersions;
                 }
             }
 
