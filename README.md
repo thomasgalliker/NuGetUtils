@@ -26,7 +26,7 @@ The following sections document basic use cases of NuGetUtils.CLI.
 
 ```
 Usage:
-  NuGetUtils.CLI [options] [command]
+  NuGetUtils [options] [command]
 
 Options:
   --silent        Silences command output on standard out [default: False]
@@ -45,7 +45,7 @@ unlist
   Unlists NuGet packages
 
 Usage:
-  NuGetUtils.CLI [options] unlist
+  NuGetUtils [options] unlist
 
 Options:
   --api-key <api-key> (REQUIRED)  A valid/unrevoked NuGet API key which has the appropriate privileges to run the
@@ -60,7 +60,7 @@ Options:
 ```
 **Example:** Unlist all pre-releases of NuGet package "EnumUtils".
 ```
-NuGetUtils.CLI unlist --api-key 12345678 --package EnumUtils --pre --confirm
+NuGetUtils unlist --api-key 12345678 --package EnumUtils --pre --confirm
 ```
 
 ### Links
