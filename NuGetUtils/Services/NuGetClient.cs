@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NuGet.Versioning;
 using NuGetUtils.Model;
 
 namespace NuGetUtils.Services
@@ -49,24 +50,19 @@ namespace NuGetUtils.Services
                 {
                     var selectedVersions = data.Versions.Select(v =>
                     {
-                        bool? isPreRelease = null;
-                        try
+                        var isPreRelease = false;
+
+                        if (SemanticVersion.TryParse(v.Version, out var semanticVersion))
                         {
-                            // TODO: Implement SemanticVersion.TryParse to avoid exception-driven flow
-                            var semanticVersion = SemanticVersion.Parse(v.Version);
-                            isPreRelease = semanticVersion.IsPreRelease;
+                            isPreRelease = semanticVersion.IsPrerelease;
                         }
-                        catch
+                        else if(v.Version.IndexOf('-') > 0)
                         {
-                            var dashIndex = v.Version.IndexOf('-');
-                            if (dashIndex > 0)
-                            {
-                                isPreRelease = true;
-                            }
+                            isPreRelease = true;
                         }
 
-                        return (Version: v, IsPreRelease: isPreRelease);
-                    }).Where(x => x.IsPreRelease == preReleaseValue)
+                        return (Version: v, IsPrerelease: isPreRelease);
+                    }).Where(x => x.IsPrerelease == preReleaseValue)
                       .Select(x => x.Version)
                       .ToList();
 
