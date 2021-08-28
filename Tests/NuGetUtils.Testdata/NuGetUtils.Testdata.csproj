@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SearchResults\NuGetUtils_Testdata1.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SearchResults\NuGetUtils_Testdata1.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ResourceLoader" Version="3.1.20095.1" />
   </ItemGroup>
 

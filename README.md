@@ -25,19 +25,24 @@ You can use this library in any .NET project which is compatible to .NET Standar
 The following sections document basic use cases of NuGetUtils.CLI.
 
 ```
+NuGetUtils.CLI
+  Simplify nuget package administration.
+
 Usage:
   NuGetUtils [options] [command]
 
 Options:
-  --silent        Silences command output on standard out [default: False]
+  --silent        Silences command output on standard out. [default: False]
   --version       Show version information
   -?, -h, --help  Show help and usage information
 
 Commands:
   unlist  Unlists NuGet packages
+  search  Search for NuGet packages
+
+
 ```
  
-
 #### Unlist NuGet Packages
 The unlist command allows to bulk unlist a specified nuget package.
 ```
@@ -53,7 +58,13 @@ Options:
   --package <package> (REQUIRED)  The NuGet package idientifier.
   --pre                           Filter pre-release packages. If true, only pre-release packages are included. If
                                   false, only stable packages are included. If not specified, all (stable and
-                                  pre-release) packages are included. [default: False]
+                                  pre-release) packages are included. [default: True]
+  --skip-latest-pre               Excludes the latest pre-release package.If true, the latest pre-release version is
+                                  excluded. If false, the latest pre-release version is included. If not specified, the
+                                  latest pre-release version is included. [default: False]
+  --skip-latest-stable            Excludes the latest stable package.If true, the latest stable version is excluded. If
+                                  false, the latest stable version is included. If not specified, the latest stable
+                                  version is included. [default: False]
   --confirm                       Confirms all user interactions. [default: False]
   --silent                        Silences command output on standard out. [default: False]
   -?, -h, --help                  Show help and usage information

@@ -30,10 +30,12 @@ namespace NuGetUtils.Tests
         public async Task ShouldSearchAsync(string packageId, bool? preRelease)
         {
             // Arrange
+            var skipLatestStable = true;
+            var skipLatestPreRelease = true;
             var nugetClient = new NuGetClient(this.logger, new NuGetClientConfiguration());
 
             // Act
-            var searchResult = await nugetClient.SearchAsync(packageId, preRelease);
+            var searchResult = await nugetClient.SearchAsync(packageId, preRelease, skipLatestStable, skipLatestPreRelease);
 
             // Assert
             testOutputHelper.WriteLine(ObjectDumper.Dump(searchResult, dumpOptions));
