@@ -42,27 +42,23 @@ namespace NuGetUtils.CLI.Commands
 
                 var hasPreRelease = context.ParseResult.Tokens.Any(t => CommonOptions.PreReleaseOption.Aliases.Contains(t.Value));
                 var preRelease = hasPreRelease ? context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption) : (bool?)null;
-                
-                var hasSkipLatestPreReleaseOption = context.ParseResult.Tokens.Any(t => CommonOptions.SkipLatestPreReleaseOption.Aliases.Contains(t.Value));
-                var skipLatestPreRelease = hasSkipLatestPreReleaseOption ? context.ParseResult.ValueForOption(CommonOptions.SkipLatestPreReleaseOption) : (bool?)null;
-                
-                var hasSkipLatestStableOption = context.ParseResult.Tokens.Any(t => CommonOptions.SkipLatestStableOption.Aliases.Contains(t.Value));
-                var skipLatestStable = hasSkipLatestStableOption ? context.ParseResult.ValueForOption(CommonOptions.SkipLatestStableOption) : (bool?)null;
+
+                var skipLatestPreRelease = context.ParseResult.ValueForOption(CommonOptions.SkipLatestPreReleaseOption);
+                var skipLatestStable = context.ParseResult.ValueForOption(CommonOptions.SkipLatestStableOption);
 
                 var confirm = context.ParseResult.ValueForOption(CommonOptions.ConfirmOption);
 
-                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease);
+                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease, skipLatestStable, skipLatestPreRelease);
 
                 var count = searchResult.Data.Sum(d => d.Versions.Count);
                 if (count > 0)
                 {
                     if (!confirm)
                     {
-
                         var searchResultLogMessage = new StringBuilder();
                         foreach (var data in searchResult.Data)
                         {
-                            foreach (var version in data.Versions.Where(v => IsSkipped(v, skipLatestStable, skipLatestPreRelease)))
+                            foreach (var version in data.Versions)
                             {
                                 searchResultLogMessage.AppendLine($"{data.Title} {version.Version}");
                             }
@@ -95,11 +91,6 @@ namespace NuGetUtils.CLI.Commands
                 }
 
                 return 0;
-            }
-
-            private bool IsSkipped(VersionSummary version, bool? skipLatestStable, bool? skipLatestPreRelease)
-            {
-                if(version.)
             }
         }
     }

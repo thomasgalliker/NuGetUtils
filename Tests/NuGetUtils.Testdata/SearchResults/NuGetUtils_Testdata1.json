@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@vocab": "http://schema.nuget.org/schema#",
+    "@base": "https://api.nuget.org/v3/registration5-gz-semver2/"
+  },
+  "totalHits": 1,
+  "data": [
+    {
+      "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/index.json",
+      "@type": "Package",
+      "registration": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/index.json",
+      "id": "NuGetUtils",
+      "version": "2.3.8-pre",
+      "description": "Simplify nuget package administration.",
+      "summary": "",
+      "title": "NuGetUtils",
+      "iconUrl": "https://api.nuget.org/v3-flatcontainer/nugetutils/2.3.8-pre/icon",
+      "licenseUrl": "http://opensource.org/licenses/Apache-2.0",
+      "projectUrl": "https://github.com/thomasgalliker/NuGetUtils",
+      "tags": [ "nuget", "unlist", "clean", "delete" ],
+      "authors": [ "Thomas Galliker" ],
+      "owners": [ "thomasgalliker" ],
+      "totalDownloads": 582,
+      "verified": false,
+      "packageTypes": [ { "name": "Dependency" } ],
+      "versions": [
+        {
+          "version": "2.0.1-pre.3",
+          "downloads": 58,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.0.1-pre.3.json"
+        },
+        {
+          "version": "2.0.1-pre.5",
+          "downloads": 57,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.0.1-pre.5.json"
+        },
+        {
+          "version": "2.0.1",
+          "downloads": 71,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.0.1.json"
+        },
+        {
+          "version": "2.1.0",
+          "downloads": 19,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.1.0.json"
+        },
+        {
+          "version": "2.1.4-pre",
+          "downloads": 20,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.1.4-pre.json"
+        },
+        {
+          "version": "2.2.0-pre.4",
+          "downloads": 27,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.2.0-pre.4.json"
+        },
+        {
+          "version": "2.2.0-pre.5",
+          "downloads": 26,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.2.0-pre.5.json"
+        },
+        {
+          "version": "2.2.0",
+          "downloads": 26,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.2.0.json"
+        },
+        {
+          "version": "2.3.2-pre",
+          "downloads": 23,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.3.2-pre.json"
+        },
+        {
+          "version": "2.3.4",
+          "downloads": 23,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.3.4.json"
+        },
+        {
+          "version": "2.3.8-pre",
+          "downloads": 0,
+          "@id": "https://api.nuget.org/v3/registration5-gz-semver2/nugetutils/2.3.8-pre.json"
+        }
+      ]
+    }
+  ]
+}

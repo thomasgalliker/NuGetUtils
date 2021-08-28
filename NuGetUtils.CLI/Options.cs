@@ -35,7 +35,7 @@ namespace NuGetUtils.CLI
         
         public static readonly Option<bool> SkipLatestStableOption = new Option<bool>(
             aliases: new[] { "--skip-latest-stable" }, 
-            getDefaultValue: () => true, 
+            getDefaultValue: () => false, 
             description: 
             "Excludes the latest stable package." +
             "If true, the latest stable version is excluded. " +
@@ -47,7 +47,7 @@ namespace NuGetUtils.CLI
         
         public static readonly Option<bool> SkipLatestPreReleaseOption = new Option<bool>(
             aliases: new[] { "--skip-latest-pre" }, 
-            getDefaultValue: () => true, 
+            getDefaultValue: () => false, 
             description: 
             "Excludes the latest pre-release package." +
             "If true, the latest pre-release version is excluded. " +

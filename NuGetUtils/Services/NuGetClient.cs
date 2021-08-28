@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NuGet.Versioning;
+using NuGetUtils.Extensions;
 using NuGetUtils.Model;
 
 namespace NuGetUtils.Services
@@ -23,14 +23,14 @@ namespace NuGetUtils.Services
             this.apiKey = configuration.ApiKey;
         }
 
-        public async Task<SearchResult> SearchAsync(string packageId, bool? preRelease)
+        public async Task<SearchResult> SearchAsync(string packageId, bool? preRelease, bool skipLatestStable, bool skipLatestPreRelease)
         {
             if (packageId == null)
             {
                 throw new ArgumentNullException(nameof(packageId));
             }
 
-            this.logger.LogInformation($"SearchAsync: packageId={packageId}, preRelease={preRelease}");
+            this.logger.LogInformation($"SearchAsync: packageId={packageId}, preRelease={(preRelease != null ? $"{preRelease}" : "<null>")}, skipLatestStable={skipLatestStable}, skipLatestPreRelease={skipLatestPreRelease}");
 
             var preReleaseParameter = (preRelease == null || preRelease == true) ? $"&prerelease=true" : "";
             var uri = $"https://azuresearch-usnc.nuget.org/query?q=packageid:{packageId}{preReleaseParameter}&semVerLevel=2.0.0";
@@ -43,6 +43,34 @@ namespace NuGetUtils.Services
             var responseString = await response.Content.ReadAsStringAsync();
             var searchResult = JsonConvert.DeserializeObject<SearchResult>(responseString);
 
+            // Filter latest stable version
+            if (skipLatestStable)
+            {
+                foreach (var data in searchResult.Data)
+                {
+                    var latestStableVersion = data.Versions.LastOrDefault(v => !v.IsPreRelease());
+                    if (latestStableVersion != null)
+                    {
+                        this.logger.LogDebug($"Skipping latest stable version: {latestStableVersion.Version}");
+                        data.Versions = data.Versions.Where(v => v != latestStableVersion).ToList();
+                    }
+                }
+            }
+
+            // Filter latest pre-release version
+            if (skipLatestPreRelease)
+            {
+                foreach (var data in searchResult.Data)
+                {
+                    var latestPreReleaseVersion = data.Versions.LastOrDefault(v => v.IsPreRelease());
+                    if (latestPreReleaseVersion != null)
+                    {
+                        this.logger.LogDebug($"Skipping latest pre-release version: {latestPreReleaseVersion.Version}");
+                        data.Versions = data.Versions.Where(v => v != latestPreReleaseVersion).ToList();
+                    }
+                }
+            }
+
             // Filter pre-release versions
             if (preRelease is bool preReleaseValue)
             {
@@ -50,17 +78,7 @@ namespace NuGetUtils.Services
                 {
                     var selectedVersions = data.Versions.Select(v =>
                     {
-                        var isPreRelease = false;
-
-                        if (SemanticVersion.TryParse(v.Version, out var semanticVersion))
-                        {
-                            isPreRelease = semanticVersion.IsPrerelease;
-                        }
-                        else if(v.Version.IndexOf('-') > 0)
-                        {
-                            isPreRelease = true;
-                        }
-
+                        var isPreRelease = v.IsPreRelease();
                         return (Version: v, IsPrerelease: isPreRelease);
                     }).Where(x => x.IsPrerelease == preReleaseValue)
                       .Select(x => x.Version)
@@ -119,6 +137,7 @@ namespace NuGetUtils.Services
             ////            $"{response.StatusCode}: {response.ReasonPhrase}");
             ////}
         }
+
     }
 }
 
