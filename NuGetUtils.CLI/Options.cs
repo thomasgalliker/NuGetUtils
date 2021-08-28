@@ -33,6 +33,30 @@ namespace NuGetUtils.CLI
             IsRequired = false,
         };
         
+        public static readonly Option<bool> SkipLatestStableOption = new Option<bool>(
+            aliases: new[] { "--skip-latest-stable" }, 
+            getDefaultValue: () => true, 
+            description: 
+            "Excludes the latest stable package." +
+            "If true, the latest stable version is excluded. " +
+            "If false, the latest stable version is included. " +
+            "If not specified, the latest stable version is included.")
+        {
+            IsRequired = false,
+        };
+        
+        public static readonly Option<bool> SkipLatestPreReleaseOption = new Option<bool>(
+            aliases: new[] { "--skip-latest-pre" }, 
+            getDefaultValue: () => true, 
+            description: 
+            "Excludes the latest pre-release package." +
+            "If true, the latest pre-release version is excluded. " +
+            "If false, the latest pre-release version is included. " +
+            "If not specified, the latest pre-release version is included.")
+        {
+            IsRequired = false,
+        };
+        
         public static readonly Option<bool> ConfirmOption = new Option<bool>(
             aliases: new[] { "--confirm" }, 
             getDefaultValue: () => false, 
