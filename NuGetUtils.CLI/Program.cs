@@ -67,8 +67,9 @@ namespace NuGetUtils.CLI
                 });
             });
 
-            services.AddSingleton<Command, UnlistCommand>();
             services.AddSingleton<Command, SearchCommand>();
+            services.AddSingleton<Command, UnlistCommand>();
+            services.AddSingleton<Command, RelistCommand>();
             services.AddSingleton<INuGetClient, NuGetClient>();
             services.AddSingleton<INuGetClientConfiguration, NuGetClientConfiguration>();
 

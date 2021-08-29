@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NuGetUtils.CLI.Internal;
-using NuGetUtils.Model;
 using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI.Commands
 {
     public class UnlistCommand : Command
     {
-        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient) : base(name: "unlist", "Unlists NuGet packages")
+        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient) : base(name: "unlist", "Unlist NuGet packages")
         {
             this.Handler = new UnlistCommandHandler(logger, nugetClient);
             this.AddOption(CommonOptions.ApiKeyOption);
