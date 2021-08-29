@@ -39,8 +39,7 @@ Options:
 Commands:
   unlist  Unlists NuGet packages
   search  Search for NuGet packages
-
-
+  relist  Relist NuGet packages
 ```
  
 #### Unlist NuGet Packages
@@ -72,6 +71,29 @@ Options:
 **Example:** Unlist all pre-releases of NuGet package "EnumUtils".
 ```
 NuGetUtils unlist --api-key 12345678 --package EnumUtils --pre --confirm
+```
+
+#### Relist NuGet Packages
+The relist command allows to undelete previously unlisted/deleted nuget packages. Since NuGet's search API does not return any unlisted packages, we have to provide a list of comma-separated versions to be relisted.
+```
+relist
+  Relist NuGet packages
+
+Usage:
+  NuGetUtils.CLI [options] relist
+
+Options:
+  --api-key <api-key> (REQUIRED)    A valid/unrevoked NuGet API key which has the appropriate privileges to run the
+                                    command.
+  --package <package> (REQUIRED)    The NuGet package idientifier.
+  --versions <versions> (REQUIRED)  A comma-separated list of versions.Example: 1.0.0-pre.1,2.0.0,3.0.0-alpha.
+  --confirm                         Confirms all user interactions. [default: False]
+  --silent                          Silences command output on standard out. [default: False]
+  -?, -h, --help                    Show help and usage information
+```
+**Example:** Relist two versions of NuGet package "EnumUtils".
+```
+NuGetUtils relist --api-key 12345678 --package EnumUtils --versions 1.0.0-pre,2.0.0
 ```
 
 ### Links
