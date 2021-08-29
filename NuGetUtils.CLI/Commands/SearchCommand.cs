@@ -17,7 +17,8 @@ namespace NuGetUtils.CLI.Commands
             this.AddOption(CommonOptions.ApiKeyOption);
             this.AddOption(CommonOptions.PackageIdOption);
             this.AddOption(CommonOptions.PreReleaseOption);
-            this.AddOption(CommonOptions.ConfirmOption);
+            this.AddOption(CommonOptions.SkipLatestPreReleaseOption);
+            this.AddOption(CommonOptions.SkipLatestStableOption);
         }
 
         private class SearchCommandHandler : ICommandHandler
@@ -39,7 +40,10 @@ namespace NuGetUtils.CLI.Commands
                 var hasPreRelease = context.ParseResult.Tokens.Any(t => CommonOptions.PreReleaseOption.Aliases.Contains(t.Value));
                 var preRelease = hasPreRelease ? context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption) : (bool?)null;
 
-                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease);
+                var skipLatestPreRelease = context.ParseResult.ValueForOption(CommonOptions.SkipLatestPreReleaseOption);
+                var skipLatestStable = context.ParseResult.ValueForOption(CommonOptions.SkipLatestStableOption);
+
+                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease, skipLatestStable, skipLatestPreRelease);
 
                 var count = searchResult.Data.Sum(d => d.Versions.Count);
                 if (count > 0)

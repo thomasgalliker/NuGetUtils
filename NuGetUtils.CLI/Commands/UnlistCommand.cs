@@ -12,12 +12,14 @@ namespace NuGetUtils.CLI.Commands
 {
     public class UnlistCommand : Command
     {
-        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient) : base(name: "unlist", "Unlists NuGet packages")
+        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient) : base(name: "unlist", "Unlist NuGet packages")
         {
             this.Handler = new UnlistCommandHandler(logger, nugetClient);
             this.AddOption(CommonOptions.ApiKeyOption);
             this.AddOption(CommonOptions.PackageIdOption);
             this.AddOption(CommonOptions.PreReleaseOption);
+            this.AddOption(CommonOptions.SkipLatestPreReleaseOption);
+            this.AddOption(CommonOptions.SkipLatestStableOption);
             this.AddOption(CommonOptions.ConfirmOption);
         }
 
@@ -40,16 +42,18 @@ namespace NuGetUtils.CLI.Commands
                 var hasPreRelease = context.ParseResult.Tokens.Any(t => CommonOptions.PreReleaseOption.Aliases.Contains(t.Value));
                 var preRelease = hasPreRelease ? context.ParseResult.ValueForOption(CommonOptions.PreReleaseOption) : (bool?)null;
 
+                var skipLatestPreRelease = context.ParseResult.ValueForOption(CommonOptions.SkipLatestPreReleaseOption);
+                var skipLatestStable = context.ParseResult.ValueForOption(CommonOptions.SkipLatestStableOption);
+
                 var confirm = context.ParseResult.ValueForOption(CommonOptions.ConfirmOption);
 
-                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease);
+                var searchResult = await this.nugetClient.SearchAsync(packageId, preRelease, skipLatestStable, skipLatestPreRelease);
 
                 var count = searchResult.Data.Sum(d => d.Versions.Count);
                 if (count > 0)
                 {
                     if (!confirm)
                     {
-
                         var searchResultLogMessage = new StringBuilder();
                         foreach (var data in searchResult.Data)
                         {
