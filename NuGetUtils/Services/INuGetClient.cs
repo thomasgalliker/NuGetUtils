@@ -20,5 +20,7 @@ namespace NuGetUtils.Services
         /// Deletes a NuGet package with given <paramref name="packageId"/> and <paramref name="version"/>.
         /// </summary>
         Task DeletePackageAsync(string apiKey, string packageId, string version);
+        
+        Task RelistPackageAsync(string apiKey, string packageId, string version);
     }
 }

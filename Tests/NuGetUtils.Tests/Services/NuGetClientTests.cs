@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NuGetUtils.Services;
@@ -5,7 +6,7 @@ using NuGetUtils.Tests.Utils;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace NuGetUtils.Tests
+namespace NuGetUtils.Tests.Services
 {
     public class NuGetClientTests
     {
@@ -27,7 +28,7 @@ namespace NuGetUtils.Tests
         [InlineData("NuGetUtils", true)]
         [InlineData("NuGetUtils", false)]
         [InlineData("NuGetUtils", null)]
-        public async Task ShouldSearchAsync(string packageId, bool? preRelease)
+        public async Task ShouldSearch(string packageId, bool? preRelease)
         {
             // Arrange
             var skipLatestStable = true;

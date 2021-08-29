@@ -138,6 +138,35 @@ namespace NuGetUtils.Services
             ////}
         }
 
+        public async Task RelistPackageAsync(string apiKey, string packageId, string version)
+        {
+            if (apiKey == null)
+            {
+                throw new ArgumentNullException(nameof(apiKey));
+            }
+
+            if (packageId == null)
+            {
+                throw new ArgumentNullException(nameof(packageId));
+            }
+
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            this.logger.LogInformation($"RelistPackageAsync for packageId={packageId}, version={version}");
+
+            var uri = $"https://www.nuget.org/api/v2/package/{packageId}/{version}";
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            request.Headers.Add("X-NuGet-ApiKey", apiKey ?? this.apiKey);
+
+            var response = await this.httpClient.SendAsync(request);
+
+            this.logger.LogInformation($"RelistPackageAsync for packageId={packageId}, version={version} returned StatusCode={(int)response.StatusCode} ({response.StatusCode})");
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }
 

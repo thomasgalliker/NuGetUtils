@@ -57,6 +57,15 @@ namespace NuGetUtils.CLI
             IsRequired = false,
         };
         
+        public static readonly Option<string> VersionsOption = new Option<string>(
+            aliases: new[] { "--versions" }, 
+            description: 
+            "A comma-separated list of versions." +
+            "Example: 1.0.0-pre.1,2.0.0,3.0.0-alpha.")
+        {
+            IsRequired = true,
+        };
+        
         public static readonly Option<bool> ConfirmOption = new Option<bool>(
             aliases: new[] { "--confirm" }, 
             getDefaultValue: () => false, 
