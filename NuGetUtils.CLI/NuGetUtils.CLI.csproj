@@ -6,7 +6,7 @@
 		<VersionPrefix>1.0.0</VersionPrefix>
 		<Version>1.0.0</Version>
 		<Authors>Thomas Galliker</Authors>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 		<AssemblyName>NuGetUtils.CLI</AssemblyName>
 		<PackageTags>nuget;unlist;clean;delete</PackageTags>
 		<PackageIconUrl>https://raw.githubusercontent.com/thomasgalliker/NuGetUtils/develop/Images/logo.png</PackageIconUrl>
@@ -29,7 +29,7 @@
 		<PackageReleaseNotes>1.0.0
 - Initial release
 		</PackageReleaseNotes>
-		<Copyright>Copyright 2021</Copyright>
+		<Copyright>Copyright 2022</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
