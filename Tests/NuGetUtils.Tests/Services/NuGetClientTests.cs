@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NuGetUtils.Services;
@@ -39,7 +38,7 @@ namespace NuGetUtils.Tests.Services
             var searchResult = await nugetClient.SearchAsync(packageId, preRelease, skipLatestStable, skipLatestPreRelease);
 
             // Assert
-            testOutputHelper.WriteLine(ObjectDumper.Dump(searchResult, dumpOptions));
+            this.testOutputHelper.WriteLine(ObjectDumper.Dump(searchResult, dumpOptions));
 
             searchResult.Should().NotBeNull();
             searchResult.Data.Should().HaveCountGreaterThan(0);

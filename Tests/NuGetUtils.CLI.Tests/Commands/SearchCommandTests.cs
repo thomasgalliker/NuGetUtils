@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Moq;
 using Moq.AutoMock;
 using NuGetUtils.CLI.Commands;
-using NuGetUtils.Model;
 using NuGetUtils.Services;
 using NuGetUtils.Testdata;
 using Xunit;
@@ -49,12 +48,12 @@ namespace NuGetUtils.CLI.Tests.Commands
                 this.Add("apikey_test", "packageid_test", null, true, false);
                 this.Add("apikey_test", "packageid_test", null, false, true);
                 this.Add("apikey_test", "packageid_test", null, true, true);
-                
+
                 this.Add("apikey_test", "packageid_test", true, false, false);
                 this.Add("apikey_test", "packageid_test", true, true, false);
                 this.Add("apikey_test", "packageid_test", true, false, true);
                 this.Add("apikey_test", "packageid_test", true, true, true);
-                
+
                 this.Add("apikey_test", "packageid_test", false, false, false);
                 this.Add("apikey_test", "packageid_test", false, true, false);
                 this.Add("apikey_test", "packageid_test", false, false, true);
