@@ -11,7 +11,8 @@ namespace NuGetUtils.CLI.Commands
 {
     public class SearchCommand : Command
     {
-        public SearchCommand(ILogger<SearchCommand> logger, INuGetClient nugetClient) : base(name: "search", "Search for NuGet packages")
+        public SearchCommand(ILogger<SearchCommand> logger, INuGetClient nugetClient)
+            : base(name: "search", "Search for NuGet packages")
         {
             this.Handler = new SearchCommandHandler(logger, nugetClient);
             this.AddOption(CommonOptions.ApiKeyOption);

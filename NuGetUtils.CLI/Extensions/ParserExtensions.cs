@@ -8,7 +8,7 @@ namespace NuGetUtils.CLI.Extensions
     {
         internal static async Task<int> RunInteractiveMode(this Parser parser)
         {
-            int result = 0;
+            var result = 0;
 
             while (true)
             {

@@ -12,7 +12,8 @@ namespace NuGetUtils.CLI.Commands
 {
     public class RelistCommand : Command
     {
-        public RelistCommand(ILogger<RelistCommand> logger, INuGetClient nugetClient) : base(name: "relist", "Relist NuGet packages")
+        public RelistCommand(ILogger<RelistCommand> logger, INuGetClient nugetClient)
+            : base(name: "relist", "Relist NuGet packages")
         {
             this.Handler = new RelistCommandHandler(logger, nugetClient);
             this.AddOption(CommonOptions.ApiKeyOption);
@@ -39,7 +40,7 @@ namespace NuGetUtils.CLI.Commands
 
                 var versionsString = context.ParseResult.ValueForOption(CommonOptions.VersionsOption);
                 var versions = versionsString?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? new string[0] { };
-                
+
                 var confirm = context.ParseResult.ValueForOption(CommonOptions.ConfirmOption);
 
                 var count = versions.Length;

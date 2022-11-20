@@ -10,12 +10,12 @@ namespace NuGetUtils.CLI.Internal
     {
         internal static async Task<bool> Confirmation(string message, string positiveText, string negativeText)
         {
-            bool repeat = true;
+            var repeat = true;
             while (repeat)
             {
                 await Task.Delay(100);
                 Console.WriteLine($"{message} ({positiveText}/{negativeText})");
-                string output = Console.ReadLine();
+                var output = Console.ReadLine();
                 if (output == null)
                 {
                     return false;

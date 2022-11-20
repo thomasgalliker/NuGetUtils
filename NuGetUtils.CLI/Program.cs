@@ -11,9 +11,9 @@ using NuGetUtils.Services;
 
 namespace NuGetUtils.CLI
 {
-    class Program
+    internal class Program
     {
-        static async Task<int> Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
             Console.WriteLine(
                 $"NuGetUtils.CLI version {typeof(Program).Assembly.GetName().Version} {Environment.NewLine}" +

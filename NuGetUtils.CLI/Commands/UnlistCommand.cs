@@ -12,7 +12,8 @@ namespace NuGetUtils.CLI.Commands
 {
     public class UnlistCommand : Command
     {
-        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient) : base(name: "unlist", "Unlist NuGet packages")
+        public UnlistCommand(ILogger<UnlistCommand> logger, INuGetClient nugetClient)
+            : base(name: "unlist", "Unlist NuGet packages")
         {
             this.Handler = new UnlistCommandHandler(logger, nugetClient);
             this.AddOption(CommonOptions.ApiKeyOption);
